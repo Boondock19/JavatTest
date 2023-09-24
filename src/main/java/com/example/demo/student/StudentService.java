@@ -2,8 +2,6 @@ package com.example.demo.student;
 
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +43,18 @@ public class StudentService {
        return studentRepository.save(updateStudent);
 
 //        return student;
+    }
+
+    public void deleteStudentById(Long id) {
+        Optional<Student> optionalStudent = this.studentRepository.findStudentById(id);
+
+        if(optionalStudent.isEmpty()) {
+            throw new IllegalStateException(String.format("Student with id %o does not exist ",id));
+        }
+
+        Student deleteStudentTarget = optionalStudent.get();
+
+        this.studentRepository.delete(deleteStudentTarget);
     }
 
 
