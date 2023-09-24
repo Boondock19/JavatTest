@@ -29,6 +29,24 @@ public class StudentService {
         studentRepository.save(student);
     }
 
+    public Student updateStudentInformation(Student student, Long id) {
+        Optional<Student> studentOptional = studentRepository.findStudentById(id);
+
+        if (studentOptional.isEmpty()) {
+            throw new IllegalStateException(String.format("Id not found, student with %o does not exist",id));
+        }
+
+        Student updateStudent = studentOptional.get();
+
+        updateStudent.setName(student.getName());
+        updateStudent.setEmail(student.getEmail());
+        updateStudent.setDob(student.getDob());
+
+       return studentRepository.save(updateStudent);
+
+//        return student;
+    }
+
 
 //    public Student postStudent() {
 //
